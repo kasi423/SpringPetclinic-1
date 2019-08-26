@@ -8,12 +8,6 @@ def remote = [:]
 pipeline{
     agent any
     stages{
-        stage('Init'){
-            steps{
-                echo "${params.ANSIBLE_USER}"
-                echo "${params.ANSIBLE_PASS}"
-            }
-        }
         stage('Git - Checkout') {
             steps{
                 git branch: 'master', credentialsId: '', url: 'https://github.com/NirakhRastogi/SpringPetclinic.git'

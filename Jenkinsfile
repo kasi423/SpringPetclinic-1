@@ -38,19 +38,7 @@ pipeline{
                 sh "sudo docker rmi -f nir16r/spring-petclinic:$VERSION"
             }
         }
-        stage('Transfer ansible playbook') {
-            steps{
-                sshCommand remote: remote, command: "rm -rf ~/ansible/spring-pet-playbook.yaml"
-                sshCommand remote: remote, command: "rm -rf ~/ansible/Deployment.yaml"
-                sshPut remote: remote, from: 'spring-pet-playbook.yaml', into: '/home/devopsinfra/ansible/spring-pet-playbook.yaml'
-                sshPut remote: remote, from: 'Deployment.yaml', into: '/home/devopsinfra/ansible/Deployment.yaml'
-            }
-        }
-        stage('Run ansible playbook') {
-            steps{
-                sshCommand remote: remote, command: "cd ~/ansible; ansible-playbook -i inventory spring-pet-playbook.yaml --extra-vars \"version=$VERSION\""
-                // sshCommand remote: remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
-            }
+        
         }
     }
 }
